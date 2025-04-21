@@ -35,7 +35,7 @@ Here's a preview of the application in action:
 ## 📂 How to Run
 
 1. Clone the repository:
-   git clone https://github.com/RivTechProjects/starwarsplanets.git
+   git clone https://github.com/RivTechProjects/starwarsplanets
    
 
 2. Navigate to the project directory:
