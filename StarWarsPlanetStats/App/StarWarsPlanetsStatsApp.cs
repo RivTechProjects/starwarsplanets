@@ -1,3 +1,6 @@
+using StarWarsPlanetStats.PlanetDataAccess;
+using StarWarsPlanetStats.UserInteraction;
+
 public class StarWarsPlanetsStatsApp
 {
     private readonly IPlanetsReader _planetsReader;

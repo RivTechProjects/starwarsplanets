@@ -1,43 +1,56 @@
+namespace StarWarsPlanetStats.PlanetDataAccess;
+using StarWarsPlanetStats.Model;
+using StarWarsPlanetStats.UserInteraction;
+
 public class PlanetStatisticsAnalyzer : IPlanetStatisticsAnalyzer
 {
     private readonly IUserInteractor _userInteractor;
     private readonly IPlanetStatsUserInteractor _planetStatsUserInteractor;
 
     public PlanetStatisticsAnalyzer(
-        IUserInteractor userInteractor, 
+        IUserInteractor userInteractor,
         IPlanetStatsUserInteractor planetStatsUserInteractor)
     {
         _userInteractor = userInteractor;
         _planetStatsUserInteractor = planetStatsUserInteractor;
     }
+
     public void Analyze(IEnumerable<Planet> planets)
     {
-        var propertyToSelectorMappings = 
-            new Dictionary<int, (string PropertyName, Func<Planet, int?> Selector)>
-    {
+        var propertyToSelectorMappings =
+            new Dictionary<int, (string PropertyName, Func<Planet, long?> Selector)>
+        {
         { 1, ("Population", planet => planet.Population) },
         { 2, ("Diameter", planet => planet.Diameter) },
         { 3, ("Surface Water", planet => planet.SurfaceWater) }
-    };
+        };
 
-        var choice = _planetStatsUserInteractor.ChooseStatisticsToView(propertyToSelectorMappings);
+        while (true)
+        {
+            var choice = _planetStatsUserInteractor.ChooseStatisticsToView(propertyToSelectorMappings);
 
-        if (
-            choice.HasValue && 
-            propertyToSelectorMappings.TryGetValue(choice.Value, out var selectedProperty))
-        {
-            ShowStatistics(planets, selectedProperty.PropertyName, selectedProperty.Selector);
-        }
-        else
-        {
-            _userInteractor.ShowMessage("No valid statistic selected.");
+            if (!choice.HasValue)
+            {
+                // User chose to exit
+                _userInteractor.ShowMessage("Goodbye!");
+                break;
+            }
+
+            if (propertyToSelectorMappings.TryGetValue(choice.Value, out var selectedProperty))
+            {
+                ShowStatistics(planets, selectedProperty.PropertyName, selectedProperty.Selector);
+            }
+            else
+            {
+                _userInteractor.ShowMessage("No valid statistic selected.");
+            }
         }
     }
 
-    private static void ShowStatistics(
+    private void ShowStatistics(
     IEnumerable<Planet> planets,
     string propertyName,
-    Func<Planet, int?> propertySelector)
+    Func<Planet, long?> propertySelector)
     {
         var maxPlanet = planets.MaxBy(propertySelector);
         var minPlanet = planets.MinBy(propertySelector);
@@ -50,7 +63,9 @@ public class PlanetStatisticsAnalyzer : IPlanetStatisticsAnalyzer
 
         foreach (var (label, planet, value) in results)
         {
-            Console.WriteLine($"{label} {propertyName} is: {value} (planet: {planet.Name})");
+            _userInteractor.ShowMessage($"{label} {propertyName} is: {value} (Planet: {planet.Name})");
         }
+
+        _userInteractor.ShowMessage(new string('-', 64));
     }
 }

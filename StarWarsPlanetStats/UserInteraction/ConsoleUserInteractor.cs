@@ -1,3 +1,5 @@
+using StarWarsPlanetStats.UserInteraction;
+
 public class ConsoleUserInteractor : IUserInteractor
 {
     public string? ReadFromUser()

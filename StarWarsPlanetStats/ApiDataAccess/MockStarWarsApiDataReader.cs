@@ -1,5 +1,4 @@
-using StarWarsPlanetStats.Interfaces;
-namespace StarWarsPlanetsStats.ApiDataAccess;
+namespace StarWarsPlanetStats.ApiDataAccess;
 
 //you can use this class in case SWAPI is down
 public class MockStarWarsApiDataReader : IApiDataReader
@@ -10,10 +9,6 @@ public class MockStarWarsApiDataReader : IApiDataReader
     public Task<string> Read(
         string baseAddress, string requestUri)
     {
-        Console.WriteLine($"Expected Base Address: '{ExpectedBaseAddress}'");
-        Console.WriteLine($"Received Base Address: '{baseAddress}'");
-        Console.WriteLine($"Expected Request URI: '{ExpectedRequestUri}'");
-        Console.WriteLine($"Received Request URI: '{requestUri}'");
         if (baseAddress != ExpectedBaseAddress)
         {
             throw new ArgumentException(

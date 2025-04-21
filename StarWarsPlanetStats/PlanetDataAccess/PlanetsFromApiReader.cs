@@ -1,6 +1,8 @@
 using System.Text.Json;
+using StarWarsPlanetStats.ApiDataAccess;
 using StarWarsPlanetStats.DTOs;
-using StarWarsPlanetStats.Interfaces;
+using StarWarsPlanetStats.Model;
+namespace StarWarsPlanetStats.PlanetDataAccess;
 
 public class PlanetsFromApiReader : IPlanetsReader
 {
@@ -28,7 +30,9 @@ public class PlanetsFromApiReader : IPlanetsReader
         }
         catch (HttpRequestException ex)
         {
-            Console.WriteLine("Failed.", ex);
+            Console.WriteLine("SWAPI has failed.", ex);
+            Console.WriteLine("Using mock data instead...");
+            Console.WriteLine(new string('-', 64));
         }
 
         if (json is null)

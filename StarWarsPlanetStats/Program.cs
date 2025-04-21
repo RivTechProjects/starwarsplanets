@@ -1,4 +1,6 @@
-﻿using StarWarsPlanetsStats.ApiDataAccess;
+﻿using StarWarsPlanetStats.ApiDataAccess;
+using StarWarsPlanetStats.PlanetDataAccess;
+using StarWarsPlanetStats.UserInteraction;
 
 try
 {
