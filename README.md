@@ -35,19 +35,14 @@ Here's a preview of the application in action:
 ## 📂 How to Run
 
 1. Clone the repository:
-   ```bash
    git clone https://github.com/RivTechProjects/starwarsplanets.git
-   ```
+   
 
 2. Navigate to the project directory:
-   ```bash
    cd starwarsplanets
-   ```
 
 3. Build and run the application:
-   ```bash
    dotnet run
-   ```
 
 4. Follow on-screen instructions to query planet data.
 
